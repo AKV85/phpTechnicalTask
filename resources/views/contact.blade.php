@@ -1,46 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Contact Us</h1>
+    <h1 class="title">Contact Us</h1>
 
-    <form method="POST" action="{{ route('contact.store') }}">
+    <form method="POST" action="{{ route('contact.store') }}" class="form">
         @csrf
 
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name">
+        <div class="form-group">
+            <label for="name" class="label">Name:</label>
+            <input type="text" name="name" id="name" class="input">
             @error('name')
-            <span class="text-danger">{{ $message }}</span>
+            <div class="error">{{ $message }}</div>
             @enderror
         </div>
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email">
+        <div class="form-group">
+            <label for="email" class="label">Email:</label>
+            <input type="email" name="email" id="email" class="input">
             @error('email')
-            <span class="text-danger">{{ $message }}</span>
+            <div class="error">{{ $message }}</div>
             @enderror
         </div>
 
-        <div>
-            <label for="message">Message:</label>
-            <textarea name="message" id="message"></textarea>
+        <div class="form-group">
+            <label for="message" class="label">Message:</label>
+            <textarea name="message" id="message" class="input"></textarea>
             @error('message')
-            <span class="text-danger">{{ $message }}</span>
+            <div class="error">{{ $message }}</div>
             @enderror
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" class="button">Submit</button>
     </form>
 
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="alert alert-success" id="success-message"
+             style="display: {{ session('success') ? 'block' : 'none' }}"
+             data-delay="{{ session('success')['delay'] ?? 0 }}">
+            {{ session('success')['message'] ?? '' }}
         </div>
+
     @endif
 
-    <h2>Saved Contacts</h2>
-    <table>
+    <h2 class="subtitle">Saved Contacts</h2>
+    <table class="table">
         <thead>
         <tr>
             <th>Name</th>
@@ -60,4 +63,8 @@
         @endforeach
         </tbody>
     </table>
+    <div class="pagination display:flex justify-content-center">
+        {{ $contacts->links() }}
+    </div>
+
 @endsection

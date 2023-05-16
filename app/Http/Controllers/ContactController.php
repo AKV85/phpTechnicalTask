@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
     public function show()
     {
-        $contacts = Contact::all();
-        return view('contact', ['contacts' => $contacts]);
+        $contacts = Contact::orderBy('created_at', 'desc')->paginate(10);
+        return view('contact', compact('contacts'));
     }
 
-
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
-        ]);
+        $validatedData = $request->validated();
 
         Contact::create($validatedData);
-        $contacts = Contact::all();
-        return view('contact', compact('contacts'))->with('success', 'Message sent successfully!');
+        return redirect()->route('contact.show')->with('success',
+            ['message' => 'Message sent successfully!', 'delay' => 4]);
     }
 }

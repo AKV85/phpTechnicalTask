@@ -8,7 +8,7 @@
 
         <div class="form-group">
             <label for="name" class="label">Name:</label>
-            <input type="text" name="name" id="name" class="input">
+            <input type="text" name="name" id="name" class="input" value="{{ old('name') }}">
             @error('name')
             <div class="error">{{ $message }}</div>
             @enderror
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label for="email" class="label">Email:</label>
-            <input type="email" name="email" id="email" class="input">
+            <input type="email" name="email" id="email" class="input" value="{{ old('email') }}">
             @error('email')
             <div class="error">{{ $message }}</div>
             @enderror
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label for="message" class="label">Message:</label>
-            <textarea name="message" id="message" class="input"></textarea>
+            <textarea name="message" id="message" class="input"> {{ old('message') }}</textarea>
             @error('message')
             <div class="error">{{ $message }}</div>
             @enderror
@@ -39,7 +39,14 @@
              data-delay="{{ session('success')['delay'] ?? 0 }}">
             {{ session('success')['message'] ?? '' }}
         </div>
+    @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger" id="error-message"
+             style="display: {{ session('error') ? 'block' : 'none' }}"
+             data-delay="{{ session('error')['delay'] ?? 0 }}">
+            {{ session('error')['message'] ?? '' }}
+        </div>
     @endif
 
     <h2 class="subtitle">Saved Contacts</h2>
@@ -63,8 +70,5 @@
         @endforeach
         </tbody>
     </table>
-    <div class="pagination display:flex justify-content-center">
-        {{ $contacts->links() }}
-    </div>
-
+    {{ $contacts->links() }}
 @endsection

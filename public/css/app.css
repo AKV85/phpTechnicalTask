@@ -107,7 +107,16 @@
     text-align: center;
     margin: 10px auto;
     border-radius: 19px;
+}
 
+.alert-danger {
+    width: 500px;
+    background-color: #ff445f;
+    color: #111111;
+    border-color: #ab1313;
+    text-align: center;
+    margin: 10px auto;
+    border-radius: 19px;
 }
 
 @media (max-width: 768px) {

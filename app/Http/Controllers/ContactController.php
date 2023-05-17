@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use App\Http\Managers\FlashMessageManager;
 use Exception;
 
 class ContactController extends Controller
@@ -17,19 +18,12 @@ class ContactController extends Controller
     public function store(ContactRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            Contact::create($validatedData);
-            return redirect()->route('contact.show')->with('success',
-                [
-                    'message' => 'Message sent successfully!',
-                    'delay' => 4
-                ]);
+            Contact::create($request->validated());
+
+            FlashMessageManager::success('Message sent successfully!', 4);
         } catch (Exception $e) {
-            return redirect()->back()->with('error',
-                [
-                    'message' => 'Something wrong. Try again.',
-                    'delay' => 4
-                ]);
+            FlashMessageManager::error('Something wrong. Try again.', 4);
         }
+        return redirect()->route('contact.show');
     }
 }

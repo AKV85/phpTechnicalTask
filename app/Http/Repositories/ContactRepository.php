@@ -5,7 +5,7 @@ namespace App\Http\Repositories;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 
-class ContactRepository
+class ContactRepository implements ContactRepositoryInterface
 {
     public function getAllContacts()
     {

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\ContactRepository;
 use App\Http\Requests\ContactRequest;
-use App\Models\Contact;
 use App\Http\Managers\FlashMessageManager;
 use Exception;
 
 class ContactController extends Controller
 {
-    protected $contactRepository;
+    protected ContactRepository $contactRepository;
     public function __construct(ContactRepository $contactRepository)
     {
         $this->contactRepository = $contactRepository;
